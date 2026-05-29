@@ -1,0 +1,18 @@
+{
+  "name": "boxed-skills",
+  "version": "0.1.0",
+  "description": "Pi/Agent skills for containerized *inabox coding agents.",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "pi-package",
+    "agent-skills",
+    "pi",
+    "skills",
+    "inabox",
+    "tmux",
+    "marimo"
+  ],
+  "pi": {
+    "skills": ["./skills"]
+  }
+}
