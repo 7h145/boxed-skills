@@ -11,6 +11,8 @@ Agent skills for containerized `*inabox` coding-agent workflows, such as
   shells, and Pi subagents.
 - [`boxed-marimo`](./skills/boxed-marimo/) — start a marimo notebook inside
   boxed tmux and pair with the user through `marimo-pair`.
+- [`boxed-dbus`](./skills/boxed-dbus/) — use a host-created, filtered
+  `xdg-dbus-proxy` socket for narrow desktop DBus access such as notifications.
 
 ## Install
 
@@ -39,6 +41,7 @@ explicitly:
 ```text
 /skill:boxed-tmux start a dev server in tmux
 /skill:boxed-marimo start a notebook_mo.py notebook
+/skill:boxed-dbus send me a desktop notification
 ```
 
 See each skill directory for detailed instructions and examples.
