@@ -15,6 +15,11 @@ is sending desktop notifications through `org.freedesktop.Notifications`.
 Do **not** ask the user to expose the full `DBUS_SESSION_BUS_ADDRESS` unless they
 explicitly want that. Prefer a filtered `xdg-dbus-proxy` socket.
 
+This workflow assumes a Linux desktop host with a freedesktop-compatible session
+DBus and notification service. If the proxy cannot be created because the host is
+Windows/macOS/WSL without a compatible DBus bridge, explain that this skill is
+not applicable instead of asking for the full host bus.
+
 ## Naming
 
 Default project-local proxy socket:
@@ -97,18 +102,32 @@ user to restart it with the bootstrap command.
 
 ## Send a notification
 
-Prefer `gdbus` because it is explicit and works without `notify-send`:
+Prefer `gdbus` because it is explicit and works without `notify-send`.
+Choose notification fields deliberately:
+
+- `APP_NAME`: the agent name, e.g. `"π"` or `"opencode"`.
+- `SUMMARY`: a fixed, short summary of the session, ideally about 3 words.
+  Prefer the session name when available; otherwise summarize the session
+  content. If neither is meaningful yet, use the session start date in RFC3339
+  format and revise it once the session has a clearer topic.
+- `URGENCY`: `0` low, `1` normal, `2` critical.
+- `BODY`: the detailed notification text.
 
 ```bash
 WORKDIR="${PWD:-/stage}"
 PROXY_SOCKET="$WORKDIR/.agents/run/dbus-host-proxy"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$PROXY_SOCKET"
 
+APP_NAME="π"
+SUMMARY="DBus notification test"
+URGENCY=0
+BODY="Notification from the boxed agent."
+
 gdbus call --session \
   --dest org.freedesktop.Notifications \
   --object-path /org/freedesktop/Notifications \
   --method org.freedesktop.Notifications.Notify \
-  'pi-agent' 0 '' 'Hello from Pi' 'Notification from the boxed agent.' [] {} 5000
+  "$APP_NAME" 0 '' "$SUMMARY" "$BODY" [] "{'urgency': <byte $URGENCY>}" 5000
 ```
 
 The call returns a notification id, for example `(uint32 145,)`.

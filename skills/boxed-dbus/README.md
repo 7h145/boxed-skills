@@ -30,6 +30,18 @@ the proxy when needed.
 3. Uses the filtered socket as the agent's DBus session bus.
 4. Sends notifications through `org.freedesktop.Notifications.Notify`.
 
+## Platform requirements
+
+This workflow assumes a Linux desktop host with a freedesktop-compatible session
+DBus and notification service. The host must be able to run `xdg-dbus-proxy`
+from an environment where `DBUS_SESSION_BUS_ADDRESS` points at the real desktop
+session bus.
+
+It is not generally applicable to Windows/macOS hosts or WSL-backed Docker/Podman
+setups unless the user has explicitly provided a compatible DBus/notification
+bridge. WSL may have its own Linux DBus environment, but that does not usually
+mean it can reach the user's actual desktop notification service.
+
 ## Security model
 
 This is intentionally narrower than mounting the full host
