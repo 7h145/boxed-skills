@@ -51,6 +51,13 @@ tmux -S "$SOCKET" capture-pane -t "$SESSION:$WINDOW" -p -S -120
 Tell the user the printed URL, usually `http://localhost:2718` or the next free
 port. If no URL appears yet, wait briefly and capture again.
 
+Always print the URL directly. If `boxed-dbus open-uri` is already available and
+verified, use it to offer the host-side notification-action/OpenURI flow for the
+marimo URL. If `boxed-dbus open-uri` is not available, do not bootstrap DBus just
+for this; briefly mention that boxed-dbus can provide a clickable
+notification/open action once the user starts the DBus proxy, then ask the user
+to open the printed URL and confirm once the notebook is open.
+
 ## Connect after the user opens the URL
 
 After the notebook is open, follow `/marimo-pair` for all notebook interaction;
