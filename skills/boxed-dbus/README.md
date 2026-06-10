@@ -62,3 +62,9 @@ Pi example:
 ```bash
 pi install git:github.com/7h145/boxed-skills
 ```
+
+[npm skills](https://www.npmjs.com/package/skills) example:
+
+```bash
+npx skills add 7h145/boxed-skills
+```
